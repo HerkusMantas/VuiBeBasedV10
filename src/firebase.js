@@ -26,3 +26,27 @@ const auth = getAuth(app);
 
 // 5. Eksportuojame paslaugas, kad galėtume jas naudoti kitur
 export { db, auth };
+
+// Autentifikacijos funkcijos
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+
+export function login(email, password) {
+  return signInWithEmailAndPassword(auth, email, password);
+}
+
+export function register(email, password) {
+  return createUserWithEmailAndPassword(auth, email, password);
+}
+
+export function logout() {
+  return signOut(auth);
+}
+
+export function getCurrentUser() {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      unsubscribe();
+      resolve(user);
+    });
+  });
+}

@@ -1,5 +1,14 @@
+
+
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import router from './router/index.js'
+import { Quasar } from 'quasar'
+import '@quasar/extras'
+import 'quasar/dist/quasar.css'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(Quasar)
+app.mount('#app')
