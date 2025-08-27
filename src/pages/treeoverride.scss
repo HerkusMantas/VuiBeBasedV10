@@ -1,0 +1,234 @@
+$arrow-color: #000000;
+$arrow-size: 18px;
+$arrow-margin: 0px;
+$vert-color: #eeeeee;
+$vert-width: 1px;
+$vert-style: dashed;
+$hrz-color: #cfcfcf;
+$hrz-width: 1px;
+$hrz-style: dashed;
+$vert-position: -13px;
+$el-position: -13px;
+$el-width: 13px;
+$node-padding-left: 0px;
+$icon-color: #99c9c8;
+$icon-size: 24px;
+$icon-padding-bottom: 8px;
+$icon-margin-right: 8px;
+$node-color: #9e9d9d;
+$node-font-family: Arial, Helvetica, sans-serif;
+$node-font-size: 14px;
+$node-font-weight: 400;
+$node-margin-top: 8px;
+$node-padding: 5px;
+$node-wrap: nowrap;
+$story-padding-top: 5px;
+$story-padding-right: 1px;
+$story-padding-bottom: 8px;
+$story-padding-left: 5px;
+$story-color: #a5a3a3 !important;
+$story-font-family: Arial, Helvetica, sans-serif;
+$story-font-size: 14px;
+$story-font-weight: 400;
+$story-wrap: nowrap;
+.tree-wrapper {
+  .node-common {
+  white-space: $node-wrap;
+  color: $node-color;
+  font-family: $node-font-family;
+  font-size: $node-font-size;
+  font-weight: $node-font-weight;
+  margin-left: -0x;
+  // color:pink !important;
+  }
+
+  .icon-common {
+  font-size: $icon-size !important;
+  padding-bottom: $icon-padding-bottom;
+  margin-right: $icon-margin-right;
+  color:$icon-color !important;
+  }
+  .q-tree {
+  position: relative;
+  color: $blue;
+
+  &__node {
+    padding: 0 0 3px $node-padding-left; // this adjusts entire node position
+    // border-left: solid 2px green;
+    // margin-left: -0px;
+// the following is the left vertical
+    &:after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    bottom: 0;
+    width: 2px;
+    right: auto;
+    left: $vert-position; // part of left position adjust
+    border-left: $vert-width $vert-style $vert-color;
+    }
+
+    &:last-child:after {
+    display: none;
+    }
+
+    &--disabled {
+    pointer-events: none;
+
+    .disabled {
+      opacity: 1 !important;
+    }
+
+    > div,
+    > i,
+    > .disabled {
+      opacity: 0.6 !important;
+
+      .q-tree__node--disabled {
+      > div,
+      > i,
+      > .disabled {
+        opacity: 1 !important;
+      }
+      }
+    }
+    }
+  }
+// the following adjusts the vert/horiz line before a node
+  &__node-header:before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    bottom: 50%;
+    width: $el-width; // part of left position adjust
+    left: $el-position; // part of left position adjust
+    border-left: $vert-width $vert-style $vert-color;
+    border-bottom: $hrz-width $hrz-style $hrz-color;
+    
+  }
+// entire child node
+  &__children {
+    padding-left: 25px; // part of left position adjust (for entire tree)
+  }
+// "story"/body nodes
+  &__node-body {
+    padding: $story-padding-top $story-padding-right $story-padding-bottom $story-padding-left;
+    font-size: $story-font-size;
+    font-family: $story-font-family;
+    font-weight: $story-font-weight;
+    color: $story-color;
+    white-space: $story-wrap;
+  }
+
+  &__node--parent {
+    padding-left: 2px;
+
+    > .q-tree__node-header:before {
+    width: 15px;
+    left: -15px;
+    }
+
+    > .q-tree__node-collapsible > .q-tree__node-body {
+    padding: 5px 0 8px 27px;
+    
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      right: auto;
+      left: 12px;
+      border-left: 1px solid currentColor;
+      bottom: 50px;
+    }
+    }
+  }
+
+  &__node--link {
+    cursor: pointer;
+  }
+// adjust below to tighten up nodes padding and margin top was at 4px
+  &__node-header {
+    padding: $node-padding;
+    margin-top: $node-margin-top;
+    border-radius: $generic-border-radius;
+    outline: 0;
+  }
+
+  &__node-header-content {
+    color: #000;
+    transition: color 0.3s;
+  }
+
+  &__node--selected .q-tree__node-header-content {
+    color: $grey;
+  }
+
+  &__icon, &__node-header-content .q-icon, &__spinner {
+    font-size: 21px;
+  }
+
+  &__img {
+    height: 42px;
+  }
+
+  &__avatar, &__node-header-content .q-avatar {
+    font-size: 28px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+  }
+
+  &__arrow, &__spinner {
+    font-size: 16px;
+  }
+
+  &__arrow {
+    font-size: $arrow-size;
+    color: $arrow-color;
+    margin-left: $arrow-margin;
+    transition: transform 0.3s;
+
+    &--rotate {
+    transform: rotate3d(0, 0, 1, 90deg);
+    }
+  }
+
+  // remove connectors before root
+  > .q-tree__node {
+    padding: 0;
+
+    &:after, > .q-tree__node-header:before {
+    display: none;
+    }
+  }
+
+  // leave space for root empty node
+  > .q-tree__node--child > .q-tree__node-header {
+    padding-left: 24px;
+  }
+
+  &--dark .q-tree__node-header-content {
+    color: #fff;
+  }
+
+  &--no-connectors {
+    .q-tree__node:after,
+    .q-tree__node-header:before,
+    .q-tree__node-body:after {
+    display: none !important;
+    }
+  }
+  }
+
+  [dir=rtl] {
+  .q-tree__arrow {
+    transform: rotate3d(0, 0, 1, 180deg) #{"/* rtl:ignore */"};
+
+    &--rotate {
+    transform: rotate3d(0, 0, 1, 90deg) #{"/* rtl:ignore */"};
+    }
+  }
+  }
+}
